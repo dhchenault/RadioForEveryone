@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radio for Everyone | RCARC</title>
+  <meta name="description" content="Join the Rusk County Amateur Radio Club for Radio for Everyone, a fun, beginner-friendly evening exploring FRS, GMRS, LoRa, Meshtastic, MeshCore, and more." />
+  <style>
+    :root {
+      --bg: #08111f;
+      --bg-soft: #101b2f;
+      --card: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.14);
+      --text: #eef4ff;
+      --muted: #b9c7de;
+      --blue: #62b0ff;
+      --blue-deep: #2c7be5;
+      --gold: #ffd166;
+      --green: #4de2a8;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 22px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(98,176,255,0.18), transparent 32%),
+        radial-gradient(circle at 85% 15%, rgba(255,209,102,0.12), transparent 24%),
+        linear-gradient(180deg, #07101d 0%, #0a1527 50%, #08111f 100%);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      width: min(calc(100% - 2rem), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(8,17,31,0.74);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav a:hover { color: var(--text); }
+
+    .nav .cta {
+      background: linear-gradient(135deg, var(--gold), #ffb84d);
+      color: #10131a;
+      padding: 0.8rem 1rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .hero {
+      padding: 4.5rem 0 3rem;
+      /* Add your generated banner image here */
+      background:
+        linear-gradient(rgba(8,17,31,0.82), rgba(8,17,31,0.92)),
+        url('images/hero-banner.png') center/cover no-repeat;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 4.4vw, 5.2rem);
+      line-height: 0.98;
+      margin: 0 0 1rem;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 62ch;
+      margin: 0 0 1.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.95rem 1.2rem;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.22);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text);
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .point {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 1rem;
+    }
+
+    .point strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .point span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -10% 58% auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(98,176,255,0.28), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-card-content {
+      position: relative;
+      padding: 1.4rem;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .mini-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 18px;
+      padding: 1rem 0.85rem;
+      min-height: 110px;
+    }
+
+    .mini-card .icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 0.2rem;
+      font-size: 1rem;
+    }
+
+    .mini-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .event-box {
+      background: rgba(10,15,24,0.62);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 1rem;
+    }
+
+    .event-box h3 {
+      margin: 0 0 0.7rem;
+      font-size: 1.08rem;
+    }
+
+    .event-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .event-item {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .event-item .dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255,209,102,0.12);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-top: 0.1rem;
+    }
+
+    section {
+      padding: 1.5rem 0 0.75rem;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2vw, 2.5rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.22rem;
+    }
+
+    .card p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(98,176,255,0.12);
+      color: #9ed0ff;
+      margin-bottom: 0.75rem;
+    }
+
+    ul.clean {
+      margin: 0;
+      padding-left: 1rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    ul.clean li + li { margin-top: 0.45rem; }
+
+    .schedule {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 1rem;
+      align-items: start;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 1rem 1.1rem;
+    }
+
+    .time {
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 0.01em;
+    }
+
+    .faq {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    details {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 1rem 1.1rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    details p {
+      margin: 0.8rem 0 0;
+      color: var(--muted);
+    }
+
+    .cta-band {
+      margin: 2rem 0 3.5rem;
+      background: linear-gradient(135deg, rgba(98,176,255,0.18), rgba(255,209,102,0.12));
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      padding: 1.6rem;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-band-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-band h2 {
+      margin: 0 0 0.35rem;
+      font-size: clamp(1.6rem, 2vw, 2.3rem);
+    }
+
+    .cta-band p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 56ch;
+    }
+
+    footer {
+      padding: 0 0 2rem;
+      color: var(--muted);
+    }
+
+    footer .foot {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+    }
+
+    .muted { color: var(--muted); }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner,
+      .section-head,
+      .cta-band-inner,
+      footer .foot {
+        display: block;
+      }
+
+      .nav {
+        margin-top: 0.9rem;
+      }
+
+      .signal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .schedule-row {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        line-height: 1.02;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!--
+    HOW TO USE YOUR HERO IMAGE:
+    1. Save the generated image as: hero-banner.png
+    2. Create a folder called /images next to this HTML file
+    3. Place the image inside that folder
+    4. The background will automatically load
+  -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark">📻</span>
+        <span>RCARC · Radio for Everyone</span>
+      </a>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#services">Explore</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#faq">FAQ</a>
+        <a href="#attend" class="cta">Join Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">A friendly, hands-on evening for beginners and curious families</div>
+          <h1>Radio for Everyone</h1>
+          <p>
+            Discover practical, affordable ways to stay connected. Join the Rusk County Amateur Radio Club for an easygoing community event exploring FRS, GMRS, and LoRa-based systems like Meshtastic and MeshCore. No technical background required.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#attend">Plan Your Visit</a>
+            <a class="btn btn-secondary" href="#services">See What You’ll Learn</a>
+          </div>
+          <div class="hero-points">
+            <div class="point">
+              <strong>Low barrier to entry</strong>
+              <span>Simple options for families, travelers, outdoorsmen, and hobbyists.</span>
+            </div>
+            <div class="point">
+              <strong>Hands-on tables</strong>
+              <span>See radios in person, ask questions, and try real equipment.</span>
+            </div>
+            <div class="point">
+              <strong>No pressure</strong>
+              <span>Come learn, compare options, and enjoy snacks and conversation.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-content">
+            <div class="signal-grid">
+              <div class="mini-card">
+                <div class="icon">🟢</div>
+                <h3>FRS</h3>
+                <p>Easy, license-free radios for short-range family communication.</p>
+              </div>
+              <div class="mini-card">
+                <div class="icon">🔵</div>
+                <h3>GMRS</h3>
+                <p>Stronger radios with more flexibility and room to grow.</p>
+              </div>
+              <div class="mini-card">
+                <div class="icon">🟠</div>
+                <h3>LoRa Mesh</h3>
+                <p>Modern off-grid messaging with Meshtastic, MeshCore, and more.</p>
+              </div>
+            </div>
+
+            <div class="event-box" id="attend">
+              <h3>Event Details</h3>
+              <div class="event-list">
+                <div class="event-item">
+                  <div class="dot">1</div>
+                  <div><strong>Date:</strong> <span class="muted">Add event date here</span></div>
+                </div>
+                <div class="event-item">
+                  <div class="dot">2</div>
+                  <div><strong>Time:</strong> <span class="muted">Add start and end time here</span></div>
+                </div>
+                <div class="event-item">
+                  <div class="dot">3</div>
+                  <div><strong>Location:</strong> <span class="muted">Add venue name and address here</span></div>
+                </div>
+                <div class="event-item">
+                  <div class="dot">4</div>
+                  <div><strong>Cost:</strong> <span class="muted">Free and open to the public</span></div>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+                <a class="btn btn-primary" href="mailto:info@ruskcountyarc.com?subject=Radio%20for%20Everyone">Ask a Question</a>
+                <a class="btn btn-secondary" href="https://RuskCountyARC.com" target="_blank" rel="noreferrer">Visit RCARC</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>What this event is all about</h2>
+          </div>
+          <p>
+            Radio can still be incredibly useful, even in a smartphone world. This event is designed to help people compare today’s most approachable radio options and understand where each one shines.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <span class="tag">For families</span>
+            <h3>Simple communication</h3>
+            <p>Learn how low-cost radios can help you stay connected at parks, events, road trips, campgrounds, and around your property.</p>
+            <ul class="clean">
+              <li>No jargon-heavy presentation</li>
+              <li>Practical examples you can relate to</li>
+              <li>Friendly advice on what to buy and why</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="tag">For preparedness</span>
+            <h3>Options beyond the cell phone</h3>
+            <p>Explore what works when coverage is poor, when networks are overloaded, or when you just want a more direct way to communicate.</p>
+            <ul class="clean">
+              <li>Rural property and travel uses</li>
+              <li>Storm and outage conversation starters</li>
+              <li>Realistic pros and cons for each service</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="tag">For curious newcomers</span>
+            <h3>Try before you dive in</h3>
+            <p>Talk with club members, handle radios, see modern mesh gear in action, and find the option that fits your needs and budget.</p>
+            <ul class="clean">
+              <li>Display tables staffed by club members</li>
+              <li>Plenty of Q&amp;A time</li>
+              <li>A clear next step if you want to go further</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Explore the radio options</h2>
+          </div>
+          <p>
+            We’ll focus on entry points that are affordable, practical, and beginner-friendly, with honest discussion about strengths, limits, and best uses.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <span class="tag">License-free</span>
+            <h3>FRS</h3>
+            <p>Family Radio Service is often the easiest place to start. It is simple, accessible, and useful for close-range communication.</p>
+            <ul class="clean">
+              <li>Best for families, events, and short-range use</li>
+              <li>Widely available and inexpensive</li>
+              <li>Limited range compared with other options</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="tag">Licensed, no test</span>
+            <h3>GMRS</h3>
+            <p>General Mobile Radio Service offers more capability and often better performance, especially for vehicle use, property coverage, and local repeaters.</p>
+            <ul class="clean">
+              <li>Good step up from bubble-pack radios</li>
+              <li>Can support mobile and base setups</li>
+              <li>Requires a simple FCC license, but no exam</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="tag">Digital off-grid</span>
+            <h3>LoRa Mesh</h3>
+            <p>See how devices using Meshtastic, MeshCore, and related systems can support low-power text messaging and location sharing without cell service.</p>
+            <ul class="clean">
+              <li>Great for tech-minded users and experiments</li>
+              <li>Focused more on data than voice</li>
+              <li>Can be surprisingly capable with the right setup</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Evening schedule</h2>
+          </div>
+          <p>
+            Here’s a sample flow for the event. You can easily adjust the timing once your final program is set.
+          </p>
+        </div>
+
+        <div class="schedule">
+          <div class="schedule-row">
+            <div class="time">6:00 PM</div>
+            <div>
+              <strong>Doors open and welcome</strong><br />
+              Guests arrive, meet club members, and get a quick overview of the evening.
+            </div>
+          </div>
+          <div class="schedule-row">
+            <div class="time">6:15 PM</div>
+            <div>
+              <strong>What radio can do for ordinary people</strong><br />
+              A beginner-friendly introduction to why these services matter and when they are most useful.
+            </div>
+          </div>
+          <div class="schedule-row">
+            <div class="time">6:35 PM</div>
+            <div>
+              <strong>Hands-on display tables</strong><br />
+              Visit FRS, GMRS, and LoRa mesh stations to compare equipment, ask questions, and see live demonstrations.
+            </div>
+          </div>
+          <div class="schedule-row">
+            <div class="time">7:15 PM</div>
+            <div>
+              <strong>Snacks and open Q&amp;A</strong><br />
+              Spend time visiting, learning, and getting personalized answers based on your goals and budget.
+            </div>
+          </div>
+          <div class="schedule-row">
+            <div class="time">7:45 PM</div>
+            <div>
+              <strong>Next steps</strong><br />
+              Learn how to keep exploring, connect with RCARC, and find the right entry point for your needs.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Frequently asked questions</h2>
+          </div>
+          <p>
+            Keep this section on the page to answer the most common questions before people even arrive.
+          </p>
+        </div>
+
+        <div class="faq">
+          <details open>
+            <summary>Do I need any experience to attend?</summary>
+            <p>No. This event is specifically designed for beginners, families, and anyone who is simply curious about radio options.</p>
+          </details>
+          <details>
+            <summary>Is this only for licensed ham radio operators?</summary>
+            <p>No. We will focus on options with low barriers to entry, including FRS, GMRS, and LoRa-based mesh systems. We may also briefly explain how amateur radio fits into the bigger picture.</p>
+          </details>
+          <details>
+            <summary>Can I bring my kids?</summary>
+            <p>Yes. This can be a fun learning event for families, especially those interested in practical communication tools and technology.</p>
+          </details>
+          <details>
+            <summary>Will there be equipment to see in person?</summary>
+            <p>Yes. Club members will staff display tables with radios, accessories, and working examples so guests can get a hands-on look.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="cta-band">
+          <div class="cta-band-inner">
+            <div>
+              <h2>Come see what radio can do.</h2>
+              <p>A friendly evening of demonstrations, conversation, snacks, and practical learning from local radio enthusiasts.</p>
+            </div>
+            <div style="display:flex; gap:0.8rem; flex-wrap:wrap;">
+              <a class="btn btn-primary" href="mailto:info@ruskcountyarc.com?subject=Radio%20for%20Everyone">Contact RCARC</a>
+              <a class="btn btn-secondary" href="#top">Back to Top</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>Presented by the Rusk County Amateur Radio Club</div>
+      <div>Update this page with your final date, time, venue, and RSVP details before publishing.</div>
+    </div>
+  </footer>
+</body>
+</html>
